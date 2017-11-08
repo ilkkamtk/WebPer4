@@ -56,6 +56,23 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+/* tehtävä a:n luokat */
+.punainen {
+    background-color: #c60f13;
+    color: #fff;
+}
+
+.sininen {
+    background-color: #2ba6cb;
+    color: #fff;
+}
+
+.vihrea {
+    background-color: #003300;
+    color: #fff;
+}
+/* tehtävä a päättyy */
+
 .primary-color {
     background-color: #2ba6cb;
 }
