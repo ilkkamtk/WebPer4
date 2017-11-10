@@ -1,47 +1,60 @@
 'use strict';
 
+const suljeNappi = document.querySelector('.closeBtn');
 const modal = document.querySelector('#modal');
-const img = modal.querySelector('img');
-const closeBtn = document.querySelector('.closeBtn');
-const ul = document.querySelector('ul');
 
-const showImages = () => {
-  fetch('kuvat.json').then((response) => {
+
+const loadJSON = (url, func) => {
+  fetch(url).then((response) => {
     return response.json();
   }).then((json) => {
-    let html = '';
-    json.forEach((kuva) => {
-      html += `<li>
-                  <figure>
-                      <a href="img/original/${kuva.mediaUrl}"><img src="img/thumbs/${kuva.mediaThumb}"></a>
-                      <figcaption>
-                          <h3>${kuva.mediaTitle}</h3>
-                      </figcaption>
-                  </figure>
-              </li>`;
-    });
-    ul.innerHTML = html;
-    init();
+    func(json);
   });
 };
-showImages();
 
-
-const init = () => {
-  const linkit = ul.querySelectorAll('a');
+const linkkiTapahtumat = () => {
+  const linkit = document.querySelectorAll('ul a');
+  // käy forEachillä linkit läpi
   linkit.forEach((linkki) => {
+    // lisää jokaiseen linkkiin click event
     linkki.addEventListener('click', (evt) => {
       evt.preventDefault();
-      // console.log(evt.currentTarget);
-      img.setAttribute('src', evt.currentTarget.href);
-      modal.classList.replace('hidden', 'modal');
-      modal.style = 'top: '+window.scrollY+'px';
+      // klikatessa hae linkin href arvo ja laita se modalin img:n src arvoksi
+      const href = linkki.getAttribute('href');
+      // tai const href = linkki.href;
+      const img = modal.querySelector('img');
+      img.setAttribute('src', href);
+      // tai img.src = href;
+      // vaihda modalin luokaksi lightbox hiddenin sijaan
+      modal.classList.replace('hidden', 'lightbox');
+      modal.classList.add('animated', 'slideInDown');
     });
   });
 };
 
 
-closeBtn.addEventListener('click', (evt) => {
+const templateFunction = (json) => {
+  let html = '';
+  json.forEach((kuva) => {
+    html += `<li>
+            <figure>
+                <a href="img/original/${kuva.mediaUrl}"><img src="img/thumbs/${kuva.mediaThumb}"></a>
+                <figcaption>
+                    <h3>${kuva.mediaTitle}</h3>
+                </figcaption>
+            </figure>
+        </li>`;
+  });
+  const element = document.querySelector('ul');
+  element.innerHTML = html;
+  // linkit voi valita vasta tämän jälkeen, eli html on nyt valmis
+  linkkiTapahtumat();
+};
+
+loadJSON('kuvat.json', templateFunction);
+
+suljeNappi.addEventListener('click', (evt) => {
   evt.preventDefault();
-  modal.classList.replace('modal', 'hidden');
+  // vaihda modalin luokka lightboxista hiddeniin
+  modal.classList.replace('lightbox', 'hidden');
 });
