@@ -73,8 +73,6 @@ textarea {
 }
 /* tehtävä a päättyy */
 
-
-
 .primary-color {
     background-color: #2ba6cb;
 }
@@ -92,6 +90,7 @@ textarea {
 }
 
 body {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
 }
@@ -158,29 +157,30 @@ aside {
     width: 100%;
 }
 
-.closeBtn {
+.lightbox {
     position: absolute;
-    right: 1rem;
-    color: #000;
-    text-decoration: none;
-    font-size: 1.5em;
-}
-
-.modal {
-    position: absolute;
-    width: 90%;
-    background-color: #fff;
+    width: 80%;
     left: 50%;
-    margin-left: -45%;
-    padding: 1.5rem;
+    margin-left: -40%;
+    background-color: #fff;
+    padding: 1rem;
     box-sizing: border-box;
 }
 
-.modal img {
+.lightbox img {
     width: 90%;
     display: block;
     margin: auto;
 }
+
+.lightbox a {
+    position: absolute;
+    right: 1rem;
+    color: #000;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
 
 /* ==========================================================================
    Media Queries
